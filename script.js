@@ -232,23 +232,27 @@ function exportImage(factor) {
   link.click();
 }
 
+function loadFromImage(img) {
+  document.getElementById("width").value = img.width;
+  document.getElementById("height").value = img.height;
+  resizeBoard();
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  for (var i = 0; i < canvas.height; i++) {
+    for (var j = 0; j < canvas.width; j++) {
+      var p = ctx.getImageData(j, i, 1, 1).data;
+      getCellElement(i, j).style.backgroundColor = `rgb(${p[0]}, ${p[1]}, ${p[2]})`;
+    }
+  }
+}
+
 function imageFromPngData(dataURL) {
   var img = new Image;
   img.onload = function() {
-    document.getElementById("width").value = img.width;
-    document.getElementById("height").value = img.height;
-    resizeBoard();
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    for (var i = 0; i < canvas.height; i++) {
-      for (var j = 0; j < canvas.width; j++) {
-        var p = ctx.getImageData(j, i, 1, 1).data;
-        getCellElement(i, j).style.backgroundColor = `rgb(${p[0]}, ${p[1]}, ${p[2]})`;
-      }
-    }
+    loadFromImage(img);
   };
   img.src = dataURL;
 }
@@ -304,6 +308,20 @@ function initHandlers() {
   }
   document.getElementById("export2").onclick = function() {
     exportImage(16);
+  }
+  document.getElementById("import").onclick = function() {
+    document.getElementById("fileUpload").click();
+  }
+  document.getElementById("fileUpload").onchange = function(e) {
+    var reader = new FileReader();
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function() {
+          loadFromImage(img);
+        }
+        img.src = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
   }
   document.getElementById("clear").onclick = function() {
     if (window.confirm("Do you really want to clear the image? This cannot be undone.")) {

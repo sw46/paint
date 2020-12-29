@@ -16,6 +16,11 @@
     border: 1px solid #999;
     touch-action: manipulation;
   }
+  input[type="file"] {
+      visibility: hidden;
+      max-width: 0;
+      max-height: 0;
+  }
   </style>
 </head>
 <body class="antialiased bg-gray-200 text-gray-900 font-sans">
@@ -45,7 +50,10 @@
     </div>
     <div class="mx-2 flex justify-center rounded-lg" role="group">
       <button id="export" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-l-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-image"></i></button>
-      <button id="export2" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-r-lg shadow-md hover:bg-red-700 focus:outline-none text-2xl"><i class="fas fa-image"></i></button>
+      <button id="export2" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold shadow-md hover:bg-red-700 focus:outline-none text-2xl"><i class="fas fa-image"></i></button>
+      <button id="import" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-r-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-upload"></i>
+      <input type="file" id="fileUpload" accept="image/*" />
+      </button>
     </div>
   </nav>
   <div class="mt-16">
