@@ -62,7 +62,7 @@ function fill(i, j, newColor) {
   newColor = getCellElement(i, j).style.backgroundColor;
   getCellElement(i, j).style.backgroundColor = oldColor;
   var undoOps = [];
-  while (queue) {
+  while (queue.length) {
     var pos = queue.pop();
     var cell = getCellElement(pos[0], pos[1]);
     if (!cell ||
@@ -71,7 +71,7 @@ function fill(i, j, newColor) {
       continue;
     undoOps.push({
                    pos: [pos[0], pos[1]],
-                   oldColor: cell.style.backgroundColor
+                   oldColor: oldColor
                  });
     cell.style.backgroundColor = newColor;
     queue.push([pos[0] - 1, pos[1]]);
@@ -111,7 +111,7 @@ function handleCellEvent(i, j, click) {
 
 function undoOnce() {
   var ops = undoLog.pop();
-  while (ops) {
+  while (ops.length) {
     var op = ops.pop();
     var cell = getCellElement(op.pos[0], op.pos[1]);
     cell.style.backgroundColor = op.oldColor;
