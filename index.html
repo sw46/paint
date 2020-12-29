@@ -19,11 +19,12 @@
 </head>
 <body class="antialiased bg-gray-200 text-gray-900 font-sans">
   <nav class="fixed py-3 px-4 flex content-left bg-gray-400 border-0 w-screen h-16" style="top:0">
-    <button id="clear" class="mx-2 flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-ban"></i></button>
-    <span class="py-2 px-2 font-semibold"><i class="fas fa-arrows-alt-v"></i></span>
-    <input type="number" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md focus:outline-none mr-2" id="width" min="1" max="999" value="58"></input>
-    <span class="py-2 px-2 font-semibold"><i class="fas fa-arrows-alt-h"></i></span>
-    <input type="number" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md focus:outline-none mr-2" id="height" min="1" max="999" value="82"></input>
+    <button id="clear" class="mr-2 flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-ban"></i></button>
+    <div class="mx-2 flex justify-center rounded-lg" role="group">
+      <input type="number" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md focus:outline-none mr-1" id="width" min="1" max="999" value="58"></input>
+      <span class="py-2 font-semibold"><i class="fas fa-times"></i></span>
+      <input type="number" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md focus:outline-none ml-1" id="height" min="1" max="999" value="82"></input>
+    </div>
     <div class="mx-2 flex justify-center rounded-lg" role="group">
       <button class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-l-lg shadow-md hover:bg-red-700 focus:outline-none" onclick="document.getElementById('color').click()">
         <input type="color" id="color" name="color" value="#ff0000" class="w-7 h-7">
