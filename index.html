@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <style>
+  #board td {
+    min-width: 1em;
+    min-height: 1em;
+    width: 1em;
+    height: 1em;
+    max-width: 1em;
+    max-height: 1em;
+    border: 1px solid #999;
+  }
+  </style>
+</head>
+<body class="antialiased bg-gray-200 text-gray-900 font-sans">
+  <nav class="fixed py-3 px-4 flex content-left bg-gray-400 border-0 w-screen h-16" style="top:0">
+    <button id="clear" class="mx-2 flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-ban"></i></button>
+    <span class="py-2 px-2 font-semibold"><i class="fas fa-arrows-alt-v"></i></span>
+    <input type="number" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md focus:outline-none mr-2" id="width" min="1" max="999" value="58"></input>
+    <span class="py-2 px-2 font-semibold"><i class="fas fa-arrows-alt-h"></i></span>
+    <input type="number" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md focus:outline-none mr-2" id="height" min="1" max="999" value="82"></input>
+    <div class="mx-2 flex justify-center rounded-lg" role="group">
+      <button class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-l-lg shadow-md hover:bg-red-700 focus:outline-none" onclick="document.getElementById('color').click()">
+        <input type="color" id="color" name="color" value="#ff0000" class="w-7 h-7">
+      </button>
+      <button id="picker" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-r-lg shadow-md hover:bg-red-700 focus:outline-none">
+        <i class="fas fa-eye-dropper"></i>
+      </button>
+    </div>
+    <div class="mx-2 flex justify-center rounded-lg" role="group">
+      <button id="pen" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-l-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-pen"></i></button>
+      <button id="fill" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-r-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-fill-drip"></i></button>
+    </div>
+    <button id="undo" class="mx-2 flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-undo"></i></button>
+    <div class="mx-2 flex justify-center rounded-lg" role="group">
+      <button id="zooms" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-l-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-search-minus"></i></button>
+      <button id="zooml" class="flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-r-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-search-plus"></i></button>
+    </div>
+    <button id="export" class="mx-2 flex flex-wrap content-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none"><i class="fas fa-image"></i></button>
+  </nav>
+  <div class="mt-16">
+    <table style="table-layout: fixed;">
+      <tbody id="board"></tbody>
+    </table>
+  </div>
+<script src="/script.js"></script>
+</body>
+</html>
