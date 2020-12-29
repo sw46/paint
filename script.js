@@ -207,8 +207,8 @@ function togglePicker() {
 function exportImage(factor) {
   var board = getBoardContents();
   var canvas = document.createElement("canvas");
-  canvas.width = board.length * factor;
-  canvas.height = board[0].length * factor;
+  canvas.width = board[0].length * factor;
+  canvas.height = board.length * factor;
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (var i = 0; i < board.length; i++) {
