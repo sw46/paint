@@ -104,8 +104,10 @@ function handleCellEvent(i, j, click) {
                    oldColor: cell.style.backgroundColor
                  }]);
     cell.style.backgroundColor = getPenColor();
+    saveSnapshotThrottled();
   } else if (tool == "fill") {
     fill(i, j, getPenColor());
+    saveSnapshotThrottled();
   }
 }
 
@@ -157,6 +159,7 @@ function resizeBoard() {
   board.style.fontSize = fontSize + "px";
   document.getElementById("board").replaceWith(board);
   board.setAttribute("id", "board");
+  saveSnapshotThrottled();
 }
 
 function clearBoard() {
@@ -169,6 +172,7 @@ function clearBoard() {
       cell.style.backgroundColor = "#ffffff";
     }
   }
+  saveSnapshot();
 }
 
 var tool;
@@ -204,7 +208,7 @@ function togglePicker() {
   }
 }
 
-function exportImage(factor) {
+function imageToPngData(factor) {
   var board = getBoardContents();
   var canvas = document.createElement("canvas");
   canvas.width = board[0].length * factor;
@@ -217,11 +221,54 @@ function exportImage(factor) {
       ctx.fillRect(j * factor, i * factor, factor, factor);
     }
   }
+  return canvas.toDataURL();
+}
+
+function exportImage(factor) {
   var link = document.createElement('a');
   link.download = "pixel-" + (factor == 1 ? "small-" : "large-") +
       (new Date()).toISOString().replaceAll(/[T:.]/g, "-").replaceAll("Z", "") + ".png";
-  link.href = canvas.toDataURL();
+  link.href = imageToPngData(factor);
   link.click();
+}
+
+function imageFromPngData(dataURL) {
+  var img = new Image;
+  img.onload = function() {
+    console.log(img.width, img.height);
+    document.getElementById("width").value = img.width;
+    document.getElementById("height").value = img.height;
+    resizeBoard();
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    for (var i = 0; i < canvas.height; i++) {
+      for (var j = 0; j < canvas.width; j++) {
+        var p = ctx.getImageData(j, i, 1, 1).data;
+        getCellElement(i, j).style.backgroundColor = `rgb(${p[0]}, ${p[1]}, ${p[2]})`;
+      }
+    }
+  };
+  img.src = dataURL;
+}
+
+function saveSnapshot() {
+  localStorage.setItem("current", imageToPngData(1));
+}
+
+var snapshotTimer;
+function saveSnapshotThrottled() {
+  clearTimeout(snapshotTimer);
+  snapshotTimer = setTimeout(saveSnapshot, 3000);
+}
+
+function loadSnapshot() {
+  var data = localStorage.getItem("current");
+  if (data) {
+    imageFromPngData(data);
+  }
 }
 
 var fontSize = 24;
@@ -271,3 +318,4 @@ function initHandlers() {
 
 initHandlers();
 resizeBoard();
+loadSnapshot();
