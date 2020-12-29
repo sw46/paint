@@ -204,21 +204,22 @@ function togglePicker() {
   }
 }
 
-function exportImage() {
+function exportImage(factor) {
   var board = getBoardContents();
   var canvas = document.createElement("canvas");
-  canvas.width = board.length;
-  canvas.height = board[0].length;
+  canvas.width = board.length * factor;
+  canvas.height = board[0].length * factor;
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (var i = 0; i < canvas.height; i++) {
-    for (var j = 0; j < canvas.width; j++) {
+  for (var i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[0].length; j++) {
       ctx.fillStyle = board[i][j];
-      ctx.fillRect(j, i, 1, 1);
+      ctx.fillRect(j * factor, i * factor, factor, factor);
     }
   }
   var link = document.createElement('a');
-  link.download = "pixel-" + (new Date()).toISOString().replaceAll(/[T:.]/g, "-").replaceAll("Z", "") + ".png";
+  link.download = "pixel-" + (factor == 1 ? "small-" : "large-") +
+      (new Date()).toISOString().replaceAll(/[T:.]/g, "-").replaceAll("Z", "") + ".png";
   link.href = canvas.toDataURL();
   link.click();
 }
@@ -253,7 +254,10 @@ function initHandlers() {
     togglePicker();
   }
   document.getElementById("export").onclick = function() {
-    exportImage();
+    exportImage(1);
+  }
+  document.getElementById("export2").onclick = function() {
+    exportImage(16);
   }
   document.getElementById("clear").onclick = function() {
     if (window.confirm("Do you really want to clear the image? This cannot be undone.")) {
