@@ -235,7 +235,6 @@ function exportImage(factor) {
 function imageFromPngData(dataURL) {
   var img = new Image;
   img.onload = function() {
-    console.log(img.width, img.height);
     document.getElementById("width").value = img.width;
     document.getElementById("height").value = img.height;
     resizeBoard();
